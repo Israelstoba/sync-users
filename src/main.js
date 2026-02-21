@@ -1,6 +1,7 @@
 import { Client, Users, Databases, Query } from 'node-appwrite';
 
 export default async ({ req, res, log, error }) => {
+  // my enviroment variables
   const endpoint = process.env.APPWRITE_FUNCTION_API_ENDPOINT;
   const projectId = process.env.APPWRITE_FUNCTION_PROJECT_ID;
   const apiKey = process.env.APPWRITE_API_KEY;
