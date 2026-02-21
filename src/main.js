@@ -1,33 +1,23 @@
 import { Client, Users, Databases, Query } from 'node-appwrite';
 
 export default async ({ req, res, log, error }) => {
-  // my enviroment variables
-  const endpoint = process.env.APPWRITE_FUNCTION_API_ENDPOINT;
-  const projectId = process.env.APPWRITE_FUNCTION_PROJECT_ID;
+  // Try built-in variables first, fallback to manual ones
+  const endpoint =
+    process.env.APPWRITE_FUNCTION_API_ENDPOINT ||
+    'https://fra.cloud.appwrite.io/v1';
+  const projectId =
+    process.env.APPWRITE_FUNCTION_PROJECT_ID || '6983cd5e0013a04126e6';
   const apiKey = process.env.APPWRITE_API_KEY;
   const databaseId = process.env.APPWRITE_DATABASE_ID;
   const usersTableId = process.env.APPWRITE_USERS_TABLE_ID;
 
   log('=== ENVIRONMENT CHECK ===');
-  log(`Endpoint: ${endpoint || 'MISSING'}`);
-  log(`Project ID: ${projectId || 'MISSING'}`);
+  log(`Endpoint: ${endpoint}`);
+  log(`Project ID: ${projectId}`);
   log(`API Key exists: ${!!apiKey}`);
-  log(`API Key length: ${apiKey ? apiKey.length : 0}`);
-  log(`Database ID: ${databaseId || 'MISSING'}`);
-  log(`Users Table ID: ${usersTableId || 'MISSING'}`);
+  log(`Database ID: ${databaseId}`);
+  log(`Users Table ID: ${usersTableId}`);
 
-  if (!endpoint) {
-    return res.json(
-      { success: false, error: 'Missing APPWRITE_FUNCTION_API_ENDPOINT' },
-      500
-    );
-  }
-  if (!projectId) {
-    return res.json(
-      { success: false, error: 'Missing APPWRITE_FUNCTION_PROJECT_ID' },
-      500
-    );
-  }
   if (!apiKey) {
     return res.json({ success: false, error: 'Missing APPWRITE_API_KEY' }, 500);
   }
